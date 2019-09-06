@@ -3,6 +3,7 @@ from chatterbot.storage import StorageAdapter
 from chatterbot.logic import LogicAdapter
 from chatterbot.search import TextSearch, IndexedTextSearch
 from chatterbot import utils
+import wikipedia
 
 
 class ChatBot(object):
@@ -204,6 +205,17 @@ class ChatBot(object):
         )
 
         response.confidence = result.confidence
+        if result.confidence <= 0:
+#             li = ['what', 'who', 'where']
+#             a = input_statement.text.split(" ")
+#             if a[0].lower() in li:
+            try:
+                response.text = wikipedia.summary(input_statement.text, sentences=1)
+            except:
+                response.text="Sorry, I was trying to charge my brain. What were you trying to say?"
+#                     response.text = "My appologies, I don't understand!"
+#             else:
+#         	    response.text="Sorry, I was trying to charge my brain. What were you trying to say?"
 
         return response
 
